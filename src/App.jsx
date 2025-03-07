@@ -16,7 +16,7 @@ function App() {
     try {
       setLoading(true);
       setError('');
-      const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=946dbc3e4923415a90312216250703&q=${encodeURIComponent(city)}&aqi=no`);
+      const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=946dbc3e4923415a90312216250703&q=${encodeURIComponent(city)}&aqi=no`);
       if (!response.ok) throw new Error('City not found');
       const data = await response.json();
       setWeather(data);

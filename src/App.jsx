@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import './App.css';
 
@@ -17,7 +16,7 @@ function App() {
     try {
       setLoading(true);
       setError('');
-      const response = await fetch(`http://localhost:5000/weather?city=${encodeURIComponent(city)}`);
+      const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=946dbc3e4923415a90312216250703&q=${encodeURIComponent(city)}&aqi=no`);
       if (!response.ok) throw new Error('City not found');
       const data = await response.json();
       setWeather(data);
@@ -32,7 +31,7 @@ function App() {
   return (
     <div className="container">
       <nav>
-        <h1>Weather App</h1>
+        <h1>WeatherNow</h1>
       </nav>
       <form onSubmit={fetchWeather}>
         <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder="Enter city name" />
@@ -42,12 +41,12 @@ function App() {
       {error && <p className="error">{error}</p>}
       {weather && (
         <div className="weather-card">
-          <h2>{weather.location}</h2>
-          <img src={weather.icon} alt={weather.condition} />
-          <p>{weather.temperature}</p>
-          <p>{weather.condition}</p>
-          <p>Wind: {weather.wind}</p>
-          <p>Humidity: {weather.humidity}</p>
+          <h2>{weather.location.name}, {weather.location.country}</h2>
+          <img src={`https:${weather.current.condition.icon}`} alt={weather.current.condition.text} />
+          <p>{weather.current.temp_c}°C</p>
+          <p>{weather.current.condition.text}</p>
+          <p>Wind: {weather.current.wind_kph} km/h</p>
+          <p>Humidity: {weather.current.humidity}%</p>
         </div>
       )}
     </div>
